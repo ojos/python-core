@@ -2,7 +2,7 @@ import argparse
 import sys
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
-from typing import List
+from typing import List, Tuple
 
 from .decorator import logging
 
@@ -85,7 +85,9 @@ def command_execute(parser: ArgumentParser, args: List[str]):
 
 
 @logging
-def get_parser(prog: str, description: str) -> ArgumentParser:
+def get_parser(
+    prog: str, description: str
+) -> Tuple[ArgumentParser, argparse._SubParsersAction]:
     parser: ArgumentParser = ArgumentParser(
         prog="/cmd", description="Kibo operation command"
     )
@@ -102,4 +104,4 @@ def get_parser(prog: str, description: str) -> ArgumentParser:
     )
     parser_help.set_defaults(handler=command_help)
 
-    return parser
+    return parser, subparsers
