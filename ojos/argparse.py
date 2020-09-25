@@ -67,7 +67,7 @@ def command_help(parser, args):
 
 
 @logging
-def execute(parser: ArgumentParser, args: List[str]):
+def command_execute(parser: ArgumentParser, args: List[str]):
     stdout: str = ""
     with StringIO() as stderr_buf, redirect_stderr(stderr_buf):
         with StringIO() as stdout_buf, redirect_stdout(stdout_buf):
