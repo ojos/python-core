@@ -82,3 +82,24 @@ def command_execute(parser: ArgumentParser, args: List[str]):
             stdout = stdout_buf.getvalue()
 
     return stdout
+
+
+@logging
+def get_parser(prog: str, description: str) -> ArgumentParser:
+    parser: ArgumentParser = ArgumentParser(
+        prog="/cmd", description="Kibo operation command"
+    )
+    subparsers: argparse._SubParsersAction = parser.add_subparsers()
+
+    # add subcommand 'help'
+    parser_help = subparsers.add_parser("help", help="see `help -h`")
+    parser_help.add_argument(
+        "command",
+        type=str,
+        nargs="?",
+        default=None,
+        help="command name which help is shown",
+    )
+    parser_help.set_defaults(handler=command_help)
+
+    return parser
