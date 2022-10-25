@@ -59,7 +59,7 @@ class ArgumentParser(argparse.ArgumentParser):
 
 
 @logging
-def command_help(parser, args, **kwargs):
+def command_help(parser, args):
     if args.command is None:
         parser.parse_args(["--help"])
     else:
@@ -67,13 +67,13 @@ def command_help(parser, args, **kwargs):
 
 
 @logging
-def command_execute(parser: ArgumentParser, args: List[str], **kwargs) -> str:
+def command_execute(parser: ArgumentParser, args: List[str]):
     stdout: str = ""
     with StringIO() as stderr_buf, redirect_stderr(stderr_buf):
         with StringIO() as stdout_buf, redirect_stdout(stdout_buf):
             try:
                 _args: argparse.Namespace = parser.parse_args(args)
-                _args.handler(parser, _args, **kwargs)
+                _args.handler(parser, _args)
             except argparse.ArgumentError:
                 parser.print_help()
             except SystemExit as e:
